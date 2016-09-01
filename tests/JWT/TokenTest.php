@@ -8,10 +8,11 @@
 
 namespace Tests\JWT;
 
+use Namshi\JOSE\JWS;
 use Namshi\JOSE\SimpleJWS;
 use Tests\BaseTests;
 
-class TokenTests extends BaseTests
+class TokenTest extends BaseTests
 {
 
     public function setUp()
@@ -24,9 +25,10 @@ class TokenTests extends BaseTests
      */
     public function shouldGenerateToken() {
         $payload = [
-            'sub' => '1234567890',
+            'sub' => 1234567890,
             'name' => 'John Doe',
-            'admin' => true
+            'admin' => true,
+            'iat' => 1472560284,
         ];
 
         $header = [
@@ -38,8 +40,45 @@ class TokenTests extends BaseTests
         $jwt->setPayload($payload);
         $jwt->sign('secret');
 
-        $this->assertEquals($jwt->getTokenString(), 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ');
+        $token = $jwt->getTokenString();
 
+        $jwt = JWS::load($token);
+
+        $this->assertTrue($jwt->verify('secret'));
+    }
+
+    /**
+     * @test
+     */
+    public function shouldValidateTokenExpired() {
+        $dateTime = new \DateTime('yesterday');
+
+        $payload = [
+            'sub' => 1234567890,
+            'name' => 'John Doe',
+            'admin' => true,
+            'iat' => 1472560284,
+            'exp' => $dateTime->getTimestamp()
+        ];
+
+        $header = [
+            'alg' => 'HS256',
+            'typ' => 'JWT'
+        ];
+
+        $jwt = new SimpleJWS($header);
+        $jwt->setPayload($payload);
+        $jwt->sign('secret');
+
+        $token = $jwt->getTokenString();
+
+        $jws = JWS::load($token);
+        $jws->verify('secret');
+
+        $jwt->setHeader($jws->getHeader());
+        $jwt->setPayload($jws->getPayload());
+
+        $this->assertTrue($jwt->isExpired());
     }
 
 }

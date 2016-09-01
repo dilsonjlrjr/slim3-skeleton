@@ -10,6 +10,15 @@ use Tests\BaseTests;
  */
 class ExampleTest extends BaseTests
 {
+    /**
+     * @var \RKA\Session
+     */
+    protected $session;
+
+    /**
+     * @var \Doctrine\ODM\MongoDB\DocumentManager
+     */
+    protected $_dm;
 
     public function setUp()
     {
@@ -21,8 +30,10 @@ class ExampleTest extends BaseTests
      */
     public function shouldInstanceObjectContainerInterface() {
 
-        $this->assertInstanceOf(\Interop\Container\ContainerInterface::class, $this->_ci);
+        $this->_dm = $this->_ci->get('database');
 
+        $this->assertInstanceOf(\Interop\Container\ContainerInterface::class, $this->_ci);
+        $this->assertInstanceOf(\Doctrine\ODM\MongoDB\DocumentManager::class, $this->_dm);
     }
 
     /**

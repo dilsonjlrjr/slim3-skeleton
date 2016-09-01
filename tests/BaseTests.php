@@ -27,6 +27,7 @@ class BaseTests extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        @session_start();
         $this->createApplication();
     }
 
