@@ -13,15 +13,14 @@ $container = $app->getContainer();
 // Service factories
 // -----------------------------------------------------------------------------
 
-
 // Flash messages
-$container['flash'] = function ($c) {
+$container['flash'] = function (\Interop\Container\ContainerInterface $c) {
     return new Slim\Flash\Messages;
 };
 
 
 // monolog
-$container['logger'] = function ($c) {
+$container['logger'] = function (\Interop\Container\ContainerInterface $c) {
     $settings = $c->get('settings');
     $logger = new Monolog\Logger($settings['logger']['name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
@@ -30,7 +29,7 @@ $container['logger'] = function ($c) {
 };
 
 // Database Connection
-$container['_dm'] = function (\Interop\Container\ContainerInterface $c) {
+$container['database'] = function (\Interop\Container\ContainerInterface $c) {
 
     $settings = $c->get('settings');
 
@@ -86,7 +85,7 @@ $container['_dm'] = function (\Interop\Container\ContainerInterface $c) {
 };
 
 //Error Handler
-$container['errorHandler'] = function ($c) {
+$container['errorHandler'] = function (\Interop\Container\ContainerInterface $c) {
     return function ($request, $response, $exception) use ($c) {
         $arrayJson = [ "code" => $exception->getCode(), "message" => 'Something went wrong! Cause: ' . $exception->getMessage()];
 
@@ -94,5 +93,10 @@ $container['errorHandler'] = function ($c) {
             ->withHeader('Content-Type', 'text/html')
             ->withJson($arrayJson);
     };
+};
+
+//Session Slim 3
+$container['session'] = function (\Interop\Container\ContainerInterface $c) {
+    return new \RKA\Session();
 };
 

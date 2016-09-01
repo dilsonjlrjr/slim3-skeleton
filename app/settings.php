@@ -11,6 +11,17 @@ return [
             'path' => __DIR__ . '/../log/app.log',
         ],
 
+        //session
+        'session' => [
+            'name' => 'SlimFramework3',
+            'lifetime' => 7200,
+            'path' => null,
+            'domain' => null,
+            'secure' => true,
+            'httponly' => true,
+            'cache_limiter' => 'nocache',
+        ],
+
         //Database - Doctrine ODM
         'database' => [
             'connection' => [

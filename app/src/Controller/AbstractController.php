@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Interop\Container\ContainerInterface;
+use RKA\Session;
 
 abstract class AbstractController
 {
@@ -24,13 +25,19 @@ abstract class AbstractController
     protected $_ci;
 
     /**
+     * @var Session
+     */
+    private $session;
+
+    /**
      * AbstractAction constructor.
      * @param ContainerInterface $ci
      */
     public function __construct(ContainerInterface $ci)
     {
         $this->_ci = $ci;
-        $this->_dm = $ci->get('_dm');
+        $this->_dm = $ci->get('database');
+        $this->session = $this->_ci->get('session');
     }
 
 
