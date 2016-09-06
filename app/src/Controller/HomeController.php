@@ -9,6 +9,8 @@
 namespace App\Controller;
 
 use Interop\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class HomeController extends AbstractController
 {
@@ -21,7 +23,7 @@ class HomeController extends AbstractController
         parent::__construct($ci);
     }
 
-    public function indexAction() {
+    public function indexAction(ServerRequestInterface $request, ResponseInterface $response) {
         echo "Slim Framework 3";
     }
 }
