@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Facilitator\App\ContainerFacilitator;
+use Slim\Collection;
 use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -9,7 +11,7 @@ use Slim\Http\Response;
 /**
  * Class BaseTests
  */
-class BaseTests extends \PHPUnit_Framework_TestCase
+class BaseUnitTests extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -42,6 +44,8 @@ class BaseTests extends \PHPUnit_Framework_TestCase
         $settings = require __DIR__ . '/../app/settings.php';
         $app = new \Slim\App($settings);
 
+        $container = $app->getContainer();
+        $container['database-settings'] = new Collection(require __DIR__ . '/../app/database.php');
 
         // Set up dependencies
         require __DIR__ . '/../app/dependencies.php';
@@ -52,8 +56,9 @@ class BaseTests extends \PHPUnit_Framework_TestCase
         // Register routes
         require __DIR__ . '/../app/routes.php';
 
+        ContainerFacilitator::setApplication($app);
         $this->_app = $app;
-        $this->_ci = $app->getContainer();
+        $this->_ci = $container;
 
         return TRUE;
     }

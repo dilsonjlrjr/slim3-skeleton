@@ -1,6 +1,6 @@
 <?php
 
-use Tests\BaseTests;
+use Tests\BaseUnitTests;
 
 /**
  * Created by PhpStorm.
@@ -8,7 +8,7 @@ use Tests\BaseTests;
  * Date: 28/08/16
  * Time: 19:32
  */
-class ExampleTest extends BaseTests
+class ExampleTest extends BaseUnitTests
 {
     /**
      * @var \RKA\Session

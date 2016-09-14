@@ -14,6 +14,14 @@ session_start();
 $settings = require __DIR__ . '/../app/settings.php';
 $app = new \Slim\App($settings);
 
+/*
+|--------------------------------------------------------------------------
+| Include settings in container
+|--------------------------------------------------------------------------
+*/
+$container = $app->getContainer();
+$container['database-settings'] = new Collection(require __DIR__ . '/../app/database.php');
+
 // Set up dependencies
 require __DIR__ . '/../app/dependencies.php';
 
@@ -22,6 +30,13 @@ require __DIR__ . '/../app/middleware.php';
 
 // Register routes
 require __DIR__ . '/../app/routes.php';
+
+/*
+|--------------------------------------------------------------------------
+| Prepare Facilitator App Container
+|--------------------------------------------------------------------------
+*/
+\App\Facilitator\App\ContainerFacilitator::setApplication($app);
 
 // Run!
 $app->run();

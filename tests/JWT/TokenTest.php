@@ -10,9 +10,9 @@ namespace Tests\JWT;
 
 use Namshi\JOSE\JWS;
 use Namshi\JOSE\SimpleJWS;
-use Tests\BaseTests;
+use Tests\BaseUnitTests;
 
-class TokenTest extends BaseTests
+class TokenTest extends BaseUnitTests
 {
 
     public function setUp()
