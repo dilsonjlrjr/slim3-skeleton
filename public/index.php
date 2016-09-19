@@ -8,8 +8,6 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
 
 require __DIR__ . '/../vendor/autoload.php';
 
-session_start();
-
 // Instantiate the app
 $settings = require __DIR__ . '/../app/settings.php';
 $app = new \Slim\App($settings);
@@ -20,7 +18,7 @@ $app = new \Slim\App($settings);
 |--------------------------------------------------------------------------
 */
 $container = $app->getContainer();
-$container['database-settings'] = new Collection(require __DIR__ . '/../app/database.php');
+$container['database-settings'] = new \Slim\Collection(require __DIR__ . '/../app/database.php');
 
 // Set up dependencies
 require __DIR__ . '/../app/dependencies.php';

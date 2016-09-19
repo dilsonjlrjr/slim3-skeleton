@@ -3,6 +3,7 @@
 namespace App\Facilitator\Database\Drivers;
 
 use App\Facilitator\App\ContainerFacilitator;
+use Doctrine\Common\Cache\ApcCache;
 use Interop\Container\ContainerInterface;
 
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
@@ -50,6 +51,7 @@ class DoctrineODM
         $configuration->setHydratorNamespace('Hydrators');
 
         $configuration->setMetadataDriverImpl(AnnotationDriver::create($settings['configuration']['DirectoryMapping']));
+        $configuration->setMetadataCacheImpl(new ApcCache());
         $configuration->setRetryConnect(true);
 
         AnnotationDriver::registerAnnotationClasses();
@@ -57,14 +59,6 @@ class DoctrineODM
         $connection = new Connection($connectionString, [], $configuration);
 
         $_dm = DocumentManager::create($connection, $configuration);
-
-        try {
-            $_dm->getConnection()->connect();
-            $_dm->getConnection()->isConnected();
-            $_dm->getConnection()->close();
-        } catch(\Exception $ex) {
-            throw $ex;
-        }
 
         return $_dm;
     }

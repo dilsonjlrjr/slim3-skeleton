@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dilsonrabelo
- * Date: 30/08/16
- * Time: 08:55
- */
 
 namespace Tests\JWT;
 
+use App\Facilitator\App\JWTFacilitator;
 use Namshi\JOSE\JWS;
 use Namshi\JOSE\SimpleJWS;
 use Tests\BaseUnitTests;
@@ -36,15 +31,9 @@ class TokenTest extends BaseUnitTests
             'typ' => 'JWT'
         ];
 
-        $jwt = new SimpleJWS($header);
-        $jwt->setPayload($payload);
-        $jwt->sign('secret');
+        $token = JWTFacilitator::createToken($header, $payload, 'password');
 
-        $token = $jwt->getTokenString();
-
-        $jwt = JWS::load($token);
-
-        $this->assertTrue($jwt->verify('secret'));
+        $this->assertTrue(JWTFacilitator::validateToken($token, 'password'));
     }
 
     /**
@@ -66,19 +55,8 @@ class TokenTest extends BaseUnitTests
             'typ' => 'JWT'
         ];
 
-        $jwt = new SimpleJWS($header);
-        $jwt->setPayload($payload);
-        $jwt->sign('secret');
-
-        $token = $jwt->getTokenString();
-
-        $jws = JWS::load($token);
-        $jws->verify('secret');
-
-        $jwt->setHeader($jws->getHeader());
-        $jwt->setPayload($jws->getPayload());
-
-        $this->assertTrue($jwt->isExpired());
+        $token = JWTFacilitator::createToken($header, $payload, 'secret');
+        $this->assertTrue(JWTFacilitator::tokenIsExpired($token, 'secret'));
     }
 
 }

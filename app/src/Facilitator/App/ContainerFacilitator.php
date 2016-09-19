@@ -13,6 +13,7 @@ class ContainerFacilitator
     private static $application;
 
     /**
+     * Get Container Slim
      * @return \Interop\Container\ContainerInterface|Container
      */
     public static function getContainer() {
@@ -22,6 +23,10 @@ class ContainerFacilitator
         return self::$application->getContainer();
     }
 
+    /**
+     * Set application slim
+     * @param App $application
+     */
     public static function setApplication(App $application) {
         self::$application = $application;
     }

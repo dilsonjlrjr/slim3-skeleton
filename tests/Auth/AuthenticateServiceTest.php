@@ -1,13 +1,20 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: dilsonrabelo
+ * Date: 15/09/16
+ * Time: 16:25
+ */
 
 namespace Tests\Auth;
 
-use App\Mapper\User;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Tests\BaseUnitTests;
 
-class AuthenticateTest extends BaseUnitTests
+use App\Mapper\ServiceUser;
+use Doctrine\ODM\MongoDB\DocumentManager;
+
+class AuthenticateServiceTest
 {
+
     /**
      * @var DocumentManager
      */
@@ -23,28 +30,18 @@ class AuthenticateTest extends BaseUnitTests
      * @test
      */
     public function shouldCreateUser() {
-        $user = new User();
-        $user->username = "user";
-        $user->password = "nonepassword";
+        $service = new ServiceUser();
+        $service->privateKey = "";
+        $service->publicKey = "";
+        $service->secret = "";
 
-        $this->dm->persist($user);
+        $this->dm->persist($service);
         $this->dm->flush();
 
         $userSelect = $this->dm->getRepository(User::class)->findBy(['username' => 'user']);
 
         $this->assertInstanceOf(User::class, $userSelect[0]);
         $this->assertEquals("nonepassword", $user->password);
-    }
-
-
-    /**
-     * @test
-     * @depends shouldCreateUser
-     */
-    public function shouldExcludeUser() {
-        $userSelect = $this->dm->getRepository(User::class)->findBy(['username' => 'user']);
-        $this->dm->remove($userSelect[0]);
-        $this->dm->flush();
     }
 
 }

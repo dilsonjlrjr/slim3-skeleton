@@ -23,10 +23,15 @@ class ServiceUser
     /**
      * @ODM\Field(type="string")
      */
-    public $username;
+    public $publicKey;
 
     /**
      * @ODM\Field(type="string")
      */
-    public $password;
+    public $privateKey;
+
+    /**
+     * @ODM\Field(type="string")
+     */
+    public $secret;
 }

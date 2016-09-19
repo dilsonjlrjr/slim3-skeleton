@@ -5,12 +5,15 @@ namespace App\Facilitator\Database;
 
 use App\Facilitator\App\ContainerFacilitator;
 use Interop\Container\ContainerInterface;
-use Slim\App;
 
 class DatabaseFacilitator
 {
     private static $connection;
 
+    /**
+     * Return connection active
+     * @return mixed $connection
+     */
     public static function getConnection() {
 
         if (self::$connection !== null) {
@@ -31,6 +34,10 @@ class DatabaseFacilitator
         return self::$connection;
     }
 
+    /**
+     * @param ContainerInterface $container
+     * @throws \Exception
+     */
     private static function validateContainerFileDatabase(ContainerInterface $container) {
         if (! $container->has('database-settings')) {
             throw new \Exception('File database configuration unspecified.');
