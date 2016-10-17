@@ -33,6 +33,23 @@ return [
         ]
     ],
 
+    'doctrine-orm' => [
+        'facilitator' => \App\Facilitator\Database\Drivers\DoctrineORM::class,
+        'connection' => [
+            'user' => '',
+            'password' => '',
+            'server' => '',
+            'dbname' => '',
+            'port' => '3306',
+            'driver' => '',
+            'charset' => '',
+        ],
+        'configuration' => [
+            'ProxyDir' =>  __DIR__ . '/../cache/DoctrineORM/Proxy/',
+            'DirectoryMapping' => __DIR__ . '/src/Mapper/',
+        ]
+    ],
+
     'doctrine-orm' => [],
 
     'pdo' => []

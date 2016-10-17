@@ -27,7 +27,8 @@ require __DIR__ . '/../app/dependencies.php';
 require __DIR__ . '/../app/middleware.php';
 
 // Register routes
-require __DIR__ . '/../app/routes.php';
+$pathController = __DIR__ . '/../app/src/Controller';
+\Slim3\Annotation\Slim3Annotation::create($app, $pathController, '');
 
 /*
 |--------------------------------------------------------------------------

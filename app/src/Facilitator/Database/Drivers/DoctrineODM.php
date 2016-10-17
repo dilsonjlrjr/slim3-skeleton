@@ -51,7 +51,7 @@ class DoctrineODM
         $configuration->setHydratorNamespace('Hydrators');
 
         $configuration->setMetadataDriverImpl(AnnotationDriver::create($settings['configuration']['DirectoryMapping']));
-        $configuration->setMetadataCacheImpl(new ApcCache());
+//        $configuration->setMetadataCacheImpl(new ApcCache());
         $configuration->setRetryConnect(true);
 
         AnnotationDriver::registerAnnotationClasses();
