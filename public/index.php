@@ -41,11 +41,15 @@ require __DIR__ . '/../app/dependencies.php';
 $pathController = __DIR__ . '/../app/src/Controller';
 \Slim3\Annotation\Slim3Annotation::create($app, $pathController, '');
 
-
 //--------------------------------------------------------------------------
 // Prepare Facilitator App Container
 //--------------------------------------------------------------------------
 \App\Facilitator\App\ContainerFacilitator::setApplication($app);
+
+$settingsDatabase = $app->getContainer()->get('database-settings');
+if ($settingsDatabase['boot-database']) {
+    \App\Facilitator\Database\DatabaseFacilitator::getConnection();
+}
 
 // Run!
 $app->run();

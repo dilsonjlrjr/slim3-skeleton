@@ -7,6 +7,7 @@ use Slim\Collection;
 use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim3\Annotation\Slim3Annotation;
 
 /**
  * Class BaseTests
@@ -47,14 +48,33 @@ class BaseUnitTests extends \PHPUnit_Framework_TestCase
         $container = $app->getContainer();
         $container['database-settings'] = new Collection(require __DIR__ . '/../app/database.php');
 
+        // -----------------------------------------------------------------------------
         // Set up dependencies
+        // -----------------------------------------------------------------------------
         require __DIR__ . '/../app/dependencies.php';
 
+        // -----------------------------------------------------------------------------
+        // Middleware Session
+        // -----------------------------------------------------------------------------
+        $settingsSession = $app->getContainer()->get('settings');
+        $settingsSession = $settingsSession['session'] ?: [];
+        $app->add(new \RKA\SessionMiddleware($settingsSession));
+
+        // -----------------------------------------------------------------------------
         // Register middleware
+        // -----------------------------------------------------------------------------
         require __DIR__ . '/../app/middleware.php';
 
+        $settingsDatabase = $app->getContainer()->get('database-settings');
+        if ($settingsDatabase['boot-database']) {
+            \App\Facilitator\Database\DatabaseFacilitator::getConnection();
+        }
+
+        // -----------------------------------------------------------------------------
         // Register routes
-        require __DIR__ . '/../app/routes.php';
+        // -----------------------------------------------------------------------------
+        $pathController = __DIR__ . '/../app/src/Controller';
+        Slim3Annotation::create($app, $pathController, '');
 
         ContainerFacilitator::setApplication($app);
         $this->_app = $app;

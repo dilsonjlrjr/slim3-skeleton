@@ -8,6 +8,8 @@
 
 namespace App\Controller;
 
+use App\Mapper\UserDoctrineODM;
+use App\Mapper\UserMoloquent;
 use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,6 +36,19 @@ class HomeController extends AbstractController
      * @Get(name="/")
      */
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response) {
-        echo "Slim Framework 3";
+
+        // -----------------------------------------------------------------------------
+        // Example Doctrine
+        // -----------------------------------------------------------------------------
+        //$user = $this->_databaseManager->getRepository(UserDoctrineODM::class)->findAll();
+        //echo $user[0]->username;
+
+        // -----------------------------------------------------------------------------
+        // Example Moloquent
+        // -----------------------------------------------------------------------------
+        //$user = UserMoloquent::all();
+        //echo $user[0]->getUsername();
+
+        echo "Slim framework 3 - Slim Skeleton";
     }
 }

@@ -15,7 +15,8 @@
 */
 
 return [
-    'driver' => 'doctrine-odm',
+    'driver' => 'moloquent',
+    'boot-database' => false,
 
     'doctrine-odm' => [
         'facilitator' => \App\Facilitator\Database\Drivers\DoctrineODM::class,
@@ -50,7 +51,19 @@ return [
         ]
     ],
 
-    'doctrine-orm' => [],
+    'moloquent' => [
+        'facilitator' => \App\Facilitator\Database\Drivers\Moloquent::class,
+        'connection' => [
+            'driver' => 'mongodb',
+            'host' => '',
+            'port' => 27017,
+            'database' => '',
+            'username' => '',
+            'password' => '',
+            'use_mongo_id' => false,
+            'use_collection' => true
+        ],
+    ],
 
     'pdo' => []
 ];

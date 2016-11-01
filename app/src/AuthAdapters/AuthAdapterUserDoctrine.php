@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use SlimAuth\AuthAdapterInterface;
 use SlimAuth\AuthResponse;
 
-class AuthAdapterUser implements AuthAdapterInterface
+class AuthAdapterUserDoctrine implements AuthAdapterInterface
 {
     /**
      * @var string
@@ -43,6 +43,7 @@ class AuthAdapterUser implements AuthAdapterInterface
 
         $date = new \DateTime('now');
         $date->add(new \DateInterval('PT10H'));
+
         $this->databaseConnection = DatabaseFacilitator::getConnection();
         $arrayUser = $this->databaseConnection->getRepository(User::class)
             ->findBy(array('username' => $this->username, 'password' => $this->password));

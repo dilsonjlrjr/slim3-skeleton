@@ -14,10 +14,8 @@ use RKA\Session;
 
 abstract class AbstractController
 {
-    /**
-     * @var DocumentManager
-     */
-    protected $_dm;
+
+    protected $_databaseManager;
 
     /**
      * @var ContainerInterface $_ci
