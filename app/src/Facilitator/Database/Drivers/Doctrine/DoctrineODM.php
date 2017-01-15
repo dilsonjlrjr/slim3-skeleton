@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Facilitator\Database\Drivers;
+namespace App\Facilitator\Database\Drivers\Doctrine;
 
 use App\Facilitator\App\ContainerFacilitator;
+use App\Facilitator\Database\Drivers\IConnection;
 use Doctrine\Common\Cache\ApcCache;
-use Interop\Container\ContainerInterface;
 
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Doctrine\MongoDB\Connection;
@@ -12,25 +12,46 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Configuration;
 
 
-class DoctrineODM
+class DoctrineODM implements IConnection
 {
-    function __invoke() : DocumentManager
+
+    /**
+     * @var DocumentManager
+     */
+    protected static $dm;
+
+    /**
+     * @var array
+     */
+    private $connectionConfig;
+
+
+    /**
+     * DoctrineODM constructor.
+     */
+    public function __construct($name)
     {
         $appContainer = ContainerFacilitator::getContainer();
         $databaseSettings = $appContainer->get('database-settings');
-        $settings = $databaseSettings->get($databaseSettings->get('driver'));
+        $this->connectionConfig = $databaseSettings->get($name);
+    }
 
+    /**
+     * @return DocumentManager
+     */
+    function fabConnection() : DocumentManager
+    {
         $connectionString = 'mongodb://';
 
-        $user     = $settings['connection']['user'];
-        $password = $settings['connection']['password'];
-        $dbName   = $settings['connection']['dbname'];
+        $user     = $this->connectionConfig['connection']['user'];
+        $password = $this->connectionConfig['connection']['password'];
+        $dbName   = $this->connectionConfig['connection']['dbname'];
 
         if ($user && $password) {
             $connectionString .= $user . ':' . $password . '@';
         }
 
-        $connectionString .= $settings['connection']['server'] . ':' . $settings['connection']['port'];
+        $connectionString .= $this->connectionConfig['connection']['server'] . ':' . $this->connectionConfig['connection']['port'];
 
         if ($dbName) {
             $connectionString .= '/' . $dbName;
@@ -45,12 +66,12 @@ class DoctrineODM
         /**
          * TODO Criar funcionalidade para gerar o diretório automático
          */
-        $configuration->setProxyDir($settings['configuration']['ProxyDir']);
+        $configuration->setProxyDir($this->connectionConfig['configuration']['ProxyDir']);
         $configuration->setProxyNamespace('Proxies');
-        $configuration->setHydratorDir($settings['configuration']['HydratorsDir']);
+        $configuration->setHydratorDir($this->connectionConfig['configuration']['HydratorsDir']);
         $configuration->setHydratorNamespace('Hydrators');
 
-        $configuration->setMetadataDriverImpl(AnnotationDriver::create($settings['configuration']['DirectoryMapping']));
+        $configuration->setMetadataDriverImpl(AnnotationDriver::create($this->connectionConfig['configuration']['DirectoryMapping']));
 //        $configuration->setMetadataCacheImpl(new ApcCache());
         $configuration->setRetryConnect(true);
 
@@ -61,5 +82,15 @@ class DoctrineODM
         $_dm = DocumentManager::create($connection, $configuration);
 
         return $_dm;
+    }
+
+    function createConnection() : DocumentManager
+    {
+        return $this->fabConnection();
+    }
+
+    function getConnection() : DocumentManager
+    {
+        return self::$dm;
     }
 }

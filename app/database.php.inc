@@ -19,7 +19,7 @@ return [
     'boot-database' => false,
 
     'doctrine-odm' => [
-        'facilitator' => \App\Facilitator\Database\Drivers\DoctrineODM::class,
+        'facilitator' => \App\Facilitator\Database\Drivers\Doctrine\DoctrineODM::class,
         'connection' => [
             'user' => '',
             'password' => '',
@@ -35,7 +35,7 @@ return [
     ],
 
     'doctrine-orm' => [
-        'facilitator' => \App\Facilitator\Database\Drivers\DoctrineORM::class,
+        'facilitator' => \App\Facilitator\Database\Drivers\Doctrine\DoctrineORM::class,
         'connection' => [
             'user' => '',
             'password' => '',
@@ -52,7 +52,7 @@ return [
     ],
 
     'moloquent' => [
-        'facilitator' => \App\Facilitator\Database\Drivers\Moloquent::class,
+        'facilitator' => \App\Facilitator\Database\Drivers\Eloquent\Moloquent::class,
         'connection' => [
             'driver' => 'mongodb',
             'host' => '',
@@ -62,6 +62,20 @@ return [
             'password' => '',
             'use_mongo_id' => false,
             'use_collection' => true
+        ],
+    ],
+
+    'eloquent' => [
+        'facilitator' => \App\Facilitator\Database\Drivers\Eloquent\Eloquent::class,
+        'connection' => [
+            'driver' => 'mysql',
+            'host' => '',
+            'database' => '',
+            'username' => '',
+            'password' => '',
+            'charset'   => '',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
         ],
     ],
 

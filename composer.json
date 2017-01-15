@@ -27,9 +27,8 @@
         "slim/flash": "^0.1.0",
         "monolog/monolog": "^1.13",
         "slim/http-cache": "^0.3.0",
-        "namshi/jose": "^7.2",
         "phpunit/phpunit": "^5.5",
         "dilsonjlrjr/slim3-auth": "^1.0",
-        "dilsonjlrjr/slim3-annotation": "^0.3.0"
+        "dilsonjlrjr/slim3-annotation": "1.0.0"
     }
 }

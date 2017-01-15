@@ -9,6 +9,9 @@
 namespace Tests\Facilitator;
 
 use App\Facilitator\App\ContainerFacilitator;
+use App\Facilitator\Database\DatabaseFacilitator;
+use Doctrine\ORM\EntityManager;
+use Illuminate\Database\Capsule\Manager;
 use Interop\Container\ContainerInterface;
 use Slim\Collection;
 use Tests\BaseUnitTests;
@@ -31,6 +34,9 @@ class FacilitatorTest extends BaseUnitTests
         $container = ContainerFacilitator::getContainer();
 
         $this->assertInstanceOf(ContainerInterface::class, $container);
+
+        $database = DatabaseFacilitator::getConnection();
+        $this->assertInstanceOf(Manager::class, $database);
     }
 
 }
