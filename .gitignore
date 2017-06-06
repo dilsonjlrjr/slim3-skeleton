@@ -3,3 +3,4 @@ app/src/settings.php
 composer.lock
 settings.php
 database.php
+/.idea/

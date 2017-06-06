@@ -15,13 +15,13 @@
 */
 
 return [
-    'driver' => 'moloquent',
+    'driver' => 'pdo',
     'boot-database' => false,
 
     'doctrine-odm' => [
         'facilitator' => \App\Facilitator\Database\Drivers\Doctrine\DoctrineODM::class,
         'connection' => [
-            'user' => '',
+            'username' => '',
             'password' => '',
             'server' => '',
             'dbname' => '',
@@ -37,7 +37,7 @@ return [
     'doctrine-orm' => [
         'facilitator' => \App\Facilitator\Database\Drivers\Doctrine\DoctrineORM::class,
         'connection' => [
-            'user' => '',
+            'username' => '',
             'password' => '',
             'server' => '',
             'dbname' => '',
@@ -79,5 +79,13 @@ return [
         ],
     ],
 
-    'pdo' => []
+    'pdo' => [
+        'facilitator' => \App\Facilitator\Database\Drivers\PDO\PDO::class,
+        'connection' => [
+            'dsn' => '',
+            'username' => '',
+            'password' => '',
+            'charset'   => '',
+        ],
+    ]
 ];
