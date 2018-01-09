@@ -58,7 +58,7 @@ class DoctrineORM implements IConnection
         // -----------------------------------------------------------------------------
         // Configuration
         // -----------------------------------------------------------------------------
-        $configuration = Setup::createAnnotationMetadataConfiguration([$this->connectionConfig['configuration']['DirectoryMapping']], false);
+        $configuration = Setup::createAnnotationMetadataConfiguration($this->connectionConfig['configuration']['DirectoryMapping'], false);
         $configuration->setAutoGenerateProxyClasses(true);
 
         /**

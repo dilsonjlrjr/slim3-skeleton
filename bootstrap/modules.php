@@ -5,5 +5,5 @@
 //--------------------------------------------------------------------------
 
 return [
-    realpath(__DIR__ . '/../app/Modules/API/Http/Controller'),
+    \App\Modules\API\Module::class,
 ];

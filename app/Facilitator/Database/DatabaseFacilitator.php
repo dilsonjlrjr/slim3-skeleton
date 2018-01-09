@@ -13,6 +13,7 @@ class DatabaseFacilitator
     /**
      * @param $name
      * @return mixed
+     * @throws \Exception
      */
     public static function fabConnection($name) {
         self::validateContainerFileDatabase($appContainer, $name);
@@ -26,8 +27,8 @@ class DatabaseFacilitator
     }
 
     /**
-     * Return connection active
-     * @return mixed $connection
+     * @return mixed
+     * @throws \Exception
      */
     public static function getConnection() {
 
@@ -51,8 +52,10 @@ class DatabaseFacilitator
 
     /**
      * @param ContainerInterface $container
-     * @param string $name optional
+     * @param string $name
      * @throws \Exception
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     private static function validateContainerFileDatabase(ContainerInterface $container, $name = "") {
         if (! $container->has('database-settings')) {

@@ -35,17 +35,17 @@ class PDO implements IConnection
         $this->connectionConfig = $databaseSettings->get($name);
     }
 
-    function fabConnection() : PDO
+    function fabConnection() : \PDO
     {
         $user     = $this->connectionConfig['connection']['username'];
         $password = $this->connectionConfig['connection']['password'];
         $dsn = $this->connectionConfig['connection']['dsn'];
 
 
-        $dbh = new PDO($dsn, $user, $password);
+        return new \PDO($dsn, $user, $password, [ \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION ]);
     }
 
-    function createConnection() : PDO
+    function createConnection() : \PDO
     {
         return $this->fabConnection();
     }
