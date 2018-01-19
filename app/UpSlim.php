@@ -25,6 +25,13 @@ class UpSlim extends SlimApp
     const VERSION = '0.0.1';
 
     /**
+     * Name application
+     *
+     * @var string
+     */
+    const NAME = 'UPSlim';
+
+    /**
      * @return UpSlim
      */
     public static function getInstance() {
@@ -46,6 +53,10 @@ class UpSlim extends SlimApp
         return self::VERSION;
     }
 
+    public static function getName() {
+        return self::NAME;
+    }
+
     /**
      * @throws \Exception
      */
@@ -59,25 +70,30 @@ class UpSlim extends SlimApp
      */
     public static function bootControllers() {
         $container = ContainerFacilitator::getContainer();
-        $listModules = require_once(__DIR__ . '/../bootstrap/modules.php');
         $settings = $container->get('settings');
 
+        $listModules = require_once($settings['path-config']['modules']);
         foreach ($listModules as $module) {
-            $moduleInstance = new $module();
-            Slim3Annotation::create(self::$application, $moduleInstance->getControllers(), $settings['dir_cache_controller']);
+            Slim3Annotation::create(self::$application, [ $module::getControllers() ], $settings['dir_cache_controller']);
         }
 
     }
 
     public static function bootMiddlewares() {
-        $middlewares = require_once(__DIR__ . '/../bootstrap/middlewares.php');
+        $container = ContainerFacilitator::getContainer();
+        $settings = $container->get('settings');
+
+        $middlewares = require_once($settings['path-config']['middleware']);
         foreach ($middlewares as $middleware) {
             self::$application->add($middleware);
         }
     }
 
     public static function bootServicesProviders() {
-        $providers = require_once(__DIR__ . '/../bootstrap/providers.php');
+        $container = ContainerFacilitator::getContainer();
+        $settings = $container->get('settings');
+
+        $providers = require_once($settings['path-config']['providers']);
         foreach ($providers as $provider) {
             ContainerFacilitator::register(new $provider);
         }

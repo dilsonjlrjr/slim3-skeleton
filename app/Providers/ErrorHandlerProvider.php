@@ -38,7 +38,7 @@ class ErrorHandlerProvider implements ServiceProviderInterface
             };
         };
 
-        $$container['notAllowedHandler'] = function ($c) {
+        $container['notAllowedHandler'] = function ($c) {
             return function ($request, $response, $methods) use ($c) {
                 return $c['response']
                     ->withStatus(405)

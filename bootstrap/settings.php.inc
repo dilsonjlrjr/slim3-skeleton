@@ -22,6 +22,13 @@ return [
             'cache_limiter' => 'nocache',
         ],
 
+        //Path of config framework
+        'path-config' => [
+            'middleware' => __DIR__ . '/middlewares.php',
+            'modules' => __DIR__ . '/modules.php',
+            'providers' => __DIR__ . '/providers.php',
+        ],
+
         // View settings
         //'view' => [
         //    'template_path' => [

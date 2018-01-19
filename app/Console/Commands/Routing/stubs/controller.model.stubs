@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\API\Http\Controller;
+namespace {{NAMESPACE-CONTROLLER}};
 
 use App\UpSlim;
 use Interop\Container\ContainerInterface;
@@ -8,14 +8,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class HomeController
- * @package App\Controller
+ * Class {{CONTROLLER-NAME}}
+ * @package {{NAMESPACE-CONTROLLER}}
  * @Controller
  */
-class HomeController extends AbstractController
+class {{CONTROLLER-NAME}} extends AbstractController
 {
     /**
-     * HomeController constructor.
+     * {{CONTROLLER-NAME}} constructor.
      * @param ContainerInterface $ci
      */
     public function __construct(ContainerInterface $ci)
@@ -26,7 +26,7 @@ class HomeController extends AbstractController
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @Get(name="/", alias="route.example")
+     * @{{VERB-NAME}}(name="/{{CONTROLLER-NAME}}", alias="route.{{CONTROLLER-NAME}}")
      */
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response) {
         echo "Up Slim " . UpSlim::getVersion();

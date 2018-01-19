@@ -29,6 +29,7 @@
         "slim/http-cache": "^0.3.0",
         "phpunit/phpunit": "^5.5",
         "dilsonjlrjr/slim3-auth": "^1.0",
-        "dilsonjlrjr/slim3-annotation": "^1.0.0"
+        "dilsonjlrjr/slim3-annotation": "^1.0.0",
+        "symfony/console": "^3.4"
     }
 }

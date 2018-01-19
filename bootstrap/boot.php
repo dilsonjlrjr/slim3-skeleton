@@ -41,3 +41,6 @@ $app = new \App\UpSlim($settings);
 // Boot Database
 //--------------------------------------------------------------------------
 //\App\UpSlim::bootDatabase();
+
+// Run!
+$app->run();
