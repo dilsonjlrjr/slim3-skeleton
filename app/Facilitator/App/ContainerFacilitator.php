@@ -27,4 +27,11 @@ class ContainerFacilitator
     public static function register(ServiceProviderInterface $serviceProvider) {
         UpSlim::getInstance()->getContainer()->register($serviceProvider);
     }
+
+    /**
+     * @return array
+     */
+    public static function getSettingsContainer() {
+        return ContainerFacilitator::getContainer()->get('settings');
+    }
 }

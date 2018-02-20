@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Modules\API;
-
+namespace {{NAMESPACE-MODULE}};
 
 class Module
 {
-    const NAME = 'API';
+    const NAME = '{{MODULE-NAME}}';
 
     public static function getPathModule() {
         return __DIR__ . '/../' . self::NAME;

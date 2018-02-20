@@ -11,6 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * Class {{CONTROLLER-NAME}}
  * @package {{NAMESPACE-CONTROLLER}}
  * @Controller
+ * @Route("/{{NAME-MODULE}}")
  */
 class {{CONTROLLER-NAME}} extends AbstractController
 {

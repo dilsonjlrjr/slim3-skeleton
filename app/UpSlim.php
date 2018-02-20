@@ -69,34 +69,64 @@ class UpSlim extends SlimApp
      * @throws \Exception
      */
     public static function bootControllers() {
-        $container = ContainerFacilitator::getContainer();
-        $settings = $container->get('settings');
+        $listModules = include(self::getModulesList());
+        $settings = ContainerFacilitator::getSettingsContainer();
 
-        $listModules = require_once($settings['path-config']['modules']);
         foreach ($listModules as $module) {
             Slim3Annotation::create(self::$application, [ $module::getControllers() ], $settings['dir_cache_controller']);
         }
-
     }
 
     public static function bootMiddlewares() {
-        $container = ContainerFacilitator::getContainer();
-        $settings = $container->get('settings');
+        $middlewares = include(self::getMiddlewareList());
 
-        $middlewares = require_once($settings['path-config']['middleware']);
         foreach ($middlewares as $middleware) {
             self::$application->add($middleware);
         }
     }
 
     public static function bootServicesProviders() {
-        $container = ContainerFacilitator::getContainer();
-        $settings = $container->get('settings');
+        $providers = include(self::getProvidersList());
 
-        $providers = require_once($settings['path-config']['providers']);
         foreach ($providers as $provider) {
             ContainerFacilitator::register(new $provider);
         }
+    }
+
+    public static function getMiddlewareList() {
+        $settings = ContainerFacilitator::getSettingsContainer();
+
+        return $settings['path-config']['middleware']['list'];
+    }
+
+    public static function getMiddlewareInstall() {
+        $settings = ContainerFacilitator::getSettingsContainer();
+
+        return $settings['path-config']['middleware']['install'];
+    }
+
+    public static function getProvidersList() {
+        $settings = ContainerFacilitator::getSettingsContainer();
+
+        return $settings['path-config']['providers']['list'];
+    }
+
+    public static function getProvidersInstall() {
+        $settings = ContainerFacilitator::getSettingsContainer();
+
+        return $settings['path-config']['providers']['install'];
+    }
+
+    public static function getModulesList() {
+        $settings = ContainerFacilitator::getSettingsContainer();
+
+        return $settings['path-config']['modules']['list'];
+    }
+
+    public static function getModulesInstall() {
+        $settings = ContainerFacilitator::getSettingsContainer();
+
+        return $settings['path-config']['modules']['install'];
     }
 
 }

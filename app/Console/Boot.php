@@ -9,6 +9,7 @@
 namespace App\Console;
 
 
+use App\Console\Commands\Module\ModuleCreateCommand;
 use App\Console\Commands\Routing\ControllerCreateCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +17,8 @@ use Symfony\Component\Console\Command\Command;
 class Boot
 {
     private static $commandList = [
-        ControllerCreateCommand::class
+        ControllerCreateCommand::class,
+        ModuleCreateCommand::class
     ];
 
     /**
