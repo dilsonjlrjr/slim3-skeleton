@@ -1,0 +1,8 @@
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @{{VERB}}(name="{{ROUTE}}")
+     */
+    public function {{METHOD-NAME}}(ServerRequestInterface $request, ResponseInterface $response) {
+        echo "Up Slim " . UpSlim::getVersion();
+    }

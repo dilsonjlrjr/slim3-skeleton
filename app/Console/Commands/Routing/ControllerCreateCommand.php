@@ -61,7 +61,6 @@ class ControllerCreateCommand extends Command
      */
     protected $moduleName;
 
-
     protected function configure()
     {
 
