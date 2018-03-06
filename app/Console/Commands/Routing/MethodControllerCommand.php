@@ -96,9 +96,6 @@ class MethodControllerCommand extends Command
 
             ->addArgument('name-method', InputArgument::REQUIRED, 'Name method is case-sensitive')
 
-            ->addArgument('verb', InputArgument::REQUIRED,
-                'Verb [ 0 - \'Get\', 1 - \'Post\', 2 - \'Put\', 3 - \'Delete\', 4 - \'Options\',  5 - \'Patch\', 6 - \'Any\' ]')
-
             ->addArgument('route', InputArgument::REQUIRED,
                 'Route eg.: /route, /route/:id more information: https://github.com/dilsonjlrjr/slim3-annotation');
     }
@@ -125,7 +122,7 @@ class MethodControllerCommand extends Command
         $this->nameModule = $this->input->getArgument('name-module');
         $this->nameController = ucwords(strtolower($this->input->getArgument('name-controller')));
         $this->nameMethod = $this->input->getArgument('name-method');
-        $this->verb = ucfirst(strtolower($this->input->getArgument('verb')));
+        $this->verb = 'Get';
         $this->route = strtolower($this->input->getArgument('route'));
 
         return $this;
