@@ -4,6 +4,7 @@ return [
         // Slim Settings
         'determineRouteBeforeAppMiddleware' => true,
         'displayErrorDetails' => true,
+        'dir_cache_controller' => __DIR__ . '/../storage/cache/Controller/',
 
         // monolog settings
         'logger' => [
@@ -22,11 +23,21 @@ return [
             'cache_limiter' => 'nocache',
         ],
 
-        //Path of config framework
+        // Core config
+        // Modify only as necessary
         'path-config' => [
-            'middleware' => __DIR__ . '/middlewares.php',
-            'modules' => __DIR__ . '/modules.php',
-            'providers' => __DIR__ . '/providers.php',
+            'middleware' => [
+                'list' => __DIR__ . '/middlewares.php',
+                'install' => __DIR__ . '/../app/Middleware',
+            ],
+            'modules' => [
+                'list' => __DIR__ . '/modules.php',
+                'install' => __DIR__ . '/../app/Modules',
+            ],
+            'providers' => [
+                'list' => __DIR__ . '/providers.php',
+                'install' => __DIR__ . '/../app/Providers',
+            ]
         ],
 
         // View settings
