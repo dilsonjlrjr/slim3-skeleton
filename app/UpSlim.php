@@ -22,7 +22,7 @@ class UpSlim extends SlimApp
      *
      * @var string
      */
-    const VERSION = '0.0.1';
+    const VERSION = '1.3.4';
 
     /**
      * Name application
@@ -72,9 +72,13 @@ class UpSlim extends SlimApp
         $listModules = include(self::getModulesList());
         $settings = ContainerFacilitator::getSettingsContainer();
 
+        $arrayControllers = [];
+
         foreach ($listModules as $module) {
-            Slim3Annotation::create(self::$application, [ $module::getControllers() ], $settings['dir_cache_controller']);
+            array_push($arrayControllers,  $module::getControllers());
         }
+
+        Slim3Annotation::create(self::$application, $arrayControllers, $settings['dir_cache_controller']);
     }
 
     public static function bootMiddlewares() {
