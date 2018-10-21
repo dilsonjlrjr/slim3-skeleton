@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: ./docker/DockerFile/webserver/Dockerfile
+    ports: 
+      - 80:80
+      - 8080:80
+    volumes: 
+      - $PWD:/var/www/html

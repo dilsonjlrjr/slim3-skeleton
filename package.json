@@ -1,0 +1,12 @@
+{
+  "name": "sigumoodle",
+  "version": "1.0.0",
+  "description": "## Thanks",
+  "scripts": {
+    "start": "docker-compose -f docker-compose-webserver.yml up --build -d",
+    "test": "docker exec -it sigumoodle_webserver_1 php /var/www/html/phpunit --testdox --configuration /var/www/html/phpunit.xml",
+    "stop": "docker-compose -f docker-compose-webserver.yml down"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -20,3 +20,8 @@
 * [PDO](http://php.net/manual/pt_BR/book.pdo.php)
 	
 ### Architecture:
+
+
+sudo ifconfig lo0 alias 10.254.254.254
+
+docker exec -it sigumoodle_webserver_1 php -dxdebug.remote_enable=1 -dxdebug.remote_mode=req -dxdebug.remote_autostart=1 -dxdebug.remote_connect_back=0  -dxdebug.remote_port=9000 -dxdebug.idekey=docker -dxdebug.remote_host=10.254.254.254  /var/www/html/phpunit --testdox --configuration /var/www/html/phpunit.xml

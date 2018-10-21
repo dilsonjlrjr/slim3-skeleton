@@ -26,9 +26,10 @@ class HomeController extends AbstractController
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
-     * @Get(name="/", alias="route.HomeController")
+     * @GET(name="/", alias="route.HomeController")
      */
     public function indexAction(ServerRequestInterface $request, ResponseInterface $response) {
-        echo "Up Slim " . UpSlim::getVersion();
+        $response->write("Up Slim " . UpSlim::getVersion());
+        return $response;
     }
 }

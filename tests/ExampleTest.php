@@ -24,8 +24,7 @@ class ExampleTest extends BaseUnitTests
         $response = $this->runRoute('GET', '/');
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('Slim Framework 3', (string)$response->getBody());
+        $this->assertContains('Up Slim 1.3.5', (string)$response->getBody());
         $this->assertNotContains('Hello', (string)$response->getBody());
-
     }
 }

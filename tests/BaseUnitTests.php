@@ -9,28 +9,23 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim3\Annotation\Slim3Annotation;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Class BaseTests
  */
-class BaseUnitTests extends \PHPUnit_Framework_TestCase
+class BaseUnitTests extends TestCase
 {
-
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \Slim\App
      */
-    protected $_ci;
-
-    /**
-     * @var Slim\App
-     */
-    protected $_app;
+    private $_app;
 
     /**
      * Setup Tests
      */
     public function setUp()
     {
-        @session_start();
         $this->createApplication();
     }
 
@@ -41,44 +36,10 @@ class BaseUnitTests extends \PHPUnit_Framework_TestCase
      */
     private function createApplication() {
 
-        // Instantiate the app
-        $settings = require __DIR__ . '/../app/settings.php';
-        $app = new \Slim\App($settings);
-
-        $container = $app->getContainer();
-        $container['database-settings'] = new Collection(require __DIR__ . '/../app/database.php');
-
-        // -----------------------------------------------------------------------------
-        // Set up dependencies
-        // -----------------------------------------------------------------------------
-        require __DIR__ . '/../app/dependencies.php';
-
-        // -----------------------------------------------------------------------------
-        // Middleware Session
-        // -----------------------------------------------------------------------------
-        $settingsSession = $app->getContainer()->get('settings');
-        $settingsSession = $settingsSession['session'] ?: [];
-        $app->add(new \RKA\SessionMiddleware($settingsSession));
-
-        // -----------------------------------------------------------------------------
-        // Register middleware
-        // -----------------------------------------------------------------------------
-        require __DIR__ . '/../app/middleware.php';
-
-        $settingsDatabase = $app->getContainer()->get('database-settings');
-        if ($settingsDatabase['boot-database']) {
-            \App\Facilitator\Database\DatabaseFacilitator::getConnection();
-        }
-
-        // -----------------------------------------------------------------------------
-        // Register routes
-        // -----------------------------------------------------------------------------
-        $pathController = __DIR__ . '/../app/src/Controller';
-        Slim3Annotation::create($app, $pathController, '');
-
-        ContainerFacilitator::setApplication($app);
-        $this->_app = $app;
-        $this->_ci = $container;
+        if (!$this->_app instanceof \Slim\App) {
+            require __DIR__ . '/../bootstrap/boot.php';
+            $this->_app = $app;
+        }        
 
         return TRUE;
     }
@@ -112,11 +73,14 @@ class BaseUnitTests extends \PHPUnit_Framework_TestCase
         // Set up a response object
         $response = new Response();
 
-
         // Process the application
         $response = $this->_app->process($request, $response);
 
         // Return the response
         return $response;
     }
+
+    // public function tearDown() {
+    //     $this->_app = null;
+    // }
 }
