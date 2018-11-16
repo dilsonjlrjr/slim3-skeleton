@@ -1,4 +1,4 @@
-# Slim Framework 3 Skeleton - RestAPI
+# Slim Framework 3 Skeleton with support Docke
 
 ## Thanks
 
@@ -12,14 +12,17 @@
 * [Slim 3 Skeleton](https://github.com/akrabat/slim3-skeleton)
 
 ### Database support
+
 * [Doctrine ODM](http://docs.doctrine-project.org/projects/doctrine-mongodb-odm/en/latest/)
-    * [Mongo PHP Adapter](https://github.com/alcaeus/mongo-php-adapter)
+* [Mongo PHP Adapter](https://github.com/alcaeus/mongo-php-adapter)
 * [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html)
 * [Eloquent](https://github.com/illuminate/database)
 * [Moloquent](https://moloquent.github.io)
 * [PDO](http://php.net/manual/pt_BR/book.pdo.php)
-	
-### Architecture:
+
+### Architecture
+
+### Docker Container
 
 
 sudo ifconfig lo0 alias 10.254.254.254
